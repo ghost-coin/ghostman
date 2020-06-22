@@ -1,10 +1,10 @@
-Manage your "partyman" web server.
+Manage your "ghostman" web server.
 
 Step 1
 ------
 Setup Cron Job
 
-'*/10 * * * * /bin/bash /home/particl/partyman/webserver/scripts/cron.sh'
+'*/10 * * * * /bin/bash /home/ghost/ghostman/webserver/scripts/cron.sh'
 
 Make sure to set the correct path to the 'cron.sh' file based on your setup.
 
