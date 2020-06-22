@@ -1,9 +1,9 @@
 #!/bin/bash
 
-PARTYMAN_PATH=~/partyman
-PARTICL_PATH=~/particlcore
-HTML_PATH=$PARTYMAN_PATH/webserver/public_html
+GHOSTMAN_PATH=~/ghostman
+GHOST_PATH=~/ghostcore
+HTML_PATH=$GHOSTMAN_PATH/webserver/public_html
 
-"$PARTYMAN_PATH"/partyman status > "$HTML_PATH"/partyman-status.tmp
-"$PARTYMAN_PATH"/partyman stakingnode stats >> "$HTML_PATH"/partyman-status.tmp
-"$PARTICL_PATH"/particl-cli getwalletinfo | grep watchonly >> "$HTML_PATH"/partyman-status.tmp
+"$GHOSTMAN_PATH"/ghostman status > "$HTML_PATH"/ghostman-status.tmp
+"$GHOSTMAN_PATH"/ghostman stakingnode stats >> "$HTML_PATH"/ghostman-status.tmp
+"$GHOST_PATH"/ghost-cli getwalletinfo | grep watchonly >> "$HTML_PATH"/ghostman-status.tmp

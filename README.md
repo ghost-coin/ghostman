@@ -1,78 +1,78 @@
-# partyman
+# ghostman
 
-Particl wallet/daemon management utilities - version 0.11
+Ghost wallet/daemon management utilities - version 0.11
 
-* This script installs, updates, and manages single-user particl daemons and wallets
+* This script installs, updates, and manages single-user ghost daemons and wallets
 * This script provides the ability to create a new wallet and manage staking node (cold staking functionality)
 
 # Install/Usage
 
-To install partyman do:
+To install ghostman do:
 
     sudo apt-get install python git unzip pv jq dnsutils
-    cd ~ && git clone https://github.com/dasource/partyman
+    cd ~ && git clone https://github.com/ghost-coin/ghostman
 
-To get the current status of particld, do:
+To get the current status of ghostd, do:
 
-    partyman/partyman status
+    ghostman/ghostman status
 
-To get the RPC command `getinfo` and `getwalletinfo` from particld, do:
+To get the RPC command `getinfo` and `getwalletinfo` from ghostd, do:
 
-    partyman/partyman getinfo
+    ghostman/ghostman getinfo
 
 
 
-To perform a new install of particl, do:
+To perform a new install of ghost, do:
 
-    partyman/partyman install
+    ghostman/ghostman install
 
-To update to the latest version of particl, do:
+To update to the latest version of ghost, do:
 
-    partyman/partyman update
+    ghostman/ghostman update
 
-To overwrite an existing particl install, do:
+To overwrite an existing ghost install, do:
 
-    partyman/partyman reinstall
+    ghostman/ghostman reinstall
 
-To restart (or start) particld, do:
+To restart (or start) ghostd, do:
 
-    partyman/partyman restart
+    ghostman/ghostman restart
 
 
 
 To create a new wallet on this staking node, do:
 
-    partyman/partyman stakingnode init
+    ghostman/ghostman stakingnode init
 
 To create a new public key on this staking node, do:
 
-    partyman/partyman stakingnode new
+    ghostman/ghostman stakingnode new
 
 To get a list of public keys on this staking node, do:
 
-    partyman/partyman stakingnode
+    ghostman/ghostman stakingnode
 
 To get staking stats for this staking node, do:
 
-    partyman/partyman stakingnode stats
+    ghostman/ghostman stakingnode stats
 
 To configure the reward address for this staking node, do:
 
-    partyman/partyman stakingnode rewardaddress
+    ghostman/ghostman stakingnode rewardaddress
 
 To configure the smsg fee rate target for this staking node, do:
 
-    partyman/partyman stakingnode smsgfeeratetarget
+    ghostman/ghostman stakingnode smsgfeeratetarget
 
 
 
 To install an create firewall/ufw rules to restrict access to only PORTS 22, 8080, 51738 and 51938, do:
 
-    partyman/partyman firewall
+    ghostman/ghostman firewall
 
 To disable the firewall/ufw and reset the rules, do:
 
-    partyman/partyman firewall reset
+    ghostman/ghostman firewall reset
 
 
 
@@ -80,23 +80,23 @@ To disable the firewall/ufw and reset the rules, do:
 
 ## install
 
-"partyman install" downloads and initializes a fresh particl install into ~/.particl
+"ghostman install" downloads and initializes a fresh ghost install into ~/.ghost
 unless already present
 
 ## reinstall
 
-"partyman reinstall" downloads and overwrites existing particl executables, even if
+"ghostman reinstall" downloads and overwrites existing ghost executables, even if
 already present
 
 ## restart
 
-"partyman restart [now]" restarts (or starts) particld. Searches for particl-cli/particld
-the current directory, ~/.particl, and $PATH. It will prompt to restart if not
+"ghostman restart [now]" restarts (or starts) ghostd. Searches for ghost-cli/ghostd
+the current directory, ~/.ghost, and $PATH. It will prompt to restart if not
 given the optional 'now' argument.
 
 ## status
 
-"partyman status" interrogates the locally running particld and displays its status
+"ghostman status" interrogates the locally running ghostd and displays its status
 
 # Dependencies
 
@@ -108,5 +108,5 @@ given the optional 'now' argument.
 * python
 * unzip
 * jq
-* particld, particl-cli
+* ghostd, ghost-cli
 * dnsutils

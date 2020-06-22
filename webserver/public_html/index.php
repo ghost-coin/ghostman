@@ -21,7 +21,7 @@ function convertBash($code) {
     return preg_replace('/[^0-9!$?#*&\',\-.\/A-Za-z\n\(\)%:<>"= ]/', '', $htmlString);
 }
 
-$status = convertBash(file_get_contents('partyman-status.tmp', FILE_USE_INCLUDE_PATH));
+$status = convertBash(file_get_contents('ghostman-status.tmp', FILE_USE_INCLUDE_PATH));
 
 ?>
 
