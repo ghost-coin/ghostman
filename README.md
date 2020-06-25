@@ -1,6 +1,6 @@
 # ghostman
 
-Ghost wallet/daemon management utilities - version 0.11
+Ghost wallet/daemon management utilities - version 0.11 based on partyman from Particl
 
 * This script installs, updates, and manages single-user ghost daemons and wallets
 * This script provides the ability to create a new wallet and manage staking node (cold staking functionality)
