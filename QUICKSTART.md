@@ -7,18 +7,18 @@ The below text contains instructions on how to get a ghost node running with the
     ```
 - Next install ghostman via
     ```bash
-    ghostman/ghostman install
+    bash ghostman/bin/ghostman.sh install
     ```
 ## Steps to hot-stake on vps
 Once ghostman has installed and started ghost daemon,we can use ghost-cli directly.
 - Initialize a staking node with
     ```bash
-        bash bin/ghostman.sh stakingnode init
+        bash ghostman/bin/ghostman.sh stakingnode init
     ```
 - Make sure to write down the words,we will need this to restore the wallet later on on desktop to keep track of staking rewards and sending out coins from stake rewards.The mnemonic is the private master key to the coins in that node.
 Output will be simmilar to this
 ```bash
-$ bash bin/ghostman.sh stakingnode init
+$ bash ghostman/bin/ghostman.sh stakingnode init
 ghostman version 0.12 - Thu Jun 25 17:27:30 UTC 2020
 gathering info, please wait...   done!
 null
