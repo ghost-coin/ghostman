@@ -451,7 +451,7 @@ install_ghostd(){
     tput sc
     echo -e "$C_CYAN"
     $wget_cmd -O - "$DOWNLOAD_URL" | pv -trep -s27M -w80 -N wallet > "$DOWNLOAD_FILE"
-    $wget_cmd -O - "https://raw.githubusercontent.com/ghost-coin/gitian.sigs/master/${LATEST_VERSION}-linux/Ghost/ghost-linux-${LATEST_VERSION}-build.assert" | pv -trep -w80 -N checksums > "${DOWNLOAD_FILE}.DIGESTS.txt"
+    $wget_cmd -O - "https://raw.githubusercontent.com/ghost-coin/gitian.sigs/master/${LATEST_VERSION}-linux/akshaynexus/ghost-linux-${LATEST_VERSION}-build.assert" | pv -trep -w80 -N checksums > "${DOWNLOAD_FILE}.DIGESTS.txt"
     echo -ne "$C_NORM"
     clear_n_lines 2
     tput rc
@@ -629,7 +629,7 @@ update_ghostd(){
         tput sc
         echo -e "$C_CYAN"
         $wget_cmd -O - "$DOWNLOAD_URL" | pv -trep -s27M -w80 -N wallet > "$DOWNLOAD_FILE"
-        $wget_cmd -O - "https://raw.githubusercontent.com/ghost-coin/gitian.sigs/master/$LATEST_VERSION.0-linux/Ghost/ghost-linux-$LATEST_VERSION-build.assert" | pv -trep -w80 -N checksums > "${DOWNLOAD_FILE}.DIGESTS.txt"
+        $wget_cmd -O - "https://raw.githubusercontent.com/ghost-coin/gitian.sigs/master/$LATEST_VERSION.0-linux/akshaynexus/ghost-linux-$LATEST_VERSION-build.assert" | pv -trep -w80 -N checksums > "${DOWNLOAD_FILE}.DIGESTS.txt"
         echo -ne "$C_NORM"
         clear_n_lines 2
         tput rc
