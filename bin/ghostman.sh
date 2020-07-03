@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ghostman - main executable
 # installs, updates, and manages ghost daemon
