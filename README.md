@@ -66,7 +66,7 @@ To configure the smsg fee rate target for this staking node, do:
 
 
 
-To install an create firewall/ufw rules to restrict access to only PORTS 22, 8080, 51738 and 51938, do:
+To install an create firewall/ufw rules to restrict access to only PORTS 22, 8080, 51728 and 51938, do:
 
     ghostman/ghostman firewall
 

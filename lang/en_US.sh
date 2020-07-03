@@ -88,7 +88,7 @@ messages=(
     ["usage_stakingnode_smsgfeeratetarget_description"]="[smsgfeeratetarget] configure smsg fee rate target"
     ["usage_stakingnode_info_description"]="[info] shows all public keys created for cold staking"
 
-    ["usage_firewall_description"]="installs and configures the UFW firewall and allows ports 22,8080,51738 and 51938"
+    ["usage_firewall_description"]="installs and configures the UFW firewall and allows ports 22,8080,51728 and 51938"
     ["usage_firewall_reset"]="disables the UFW firewall and resets the rules to default"
 
 
@@ -114,7 +114,7 @@ messages=(
     ["status_uptimed"]="  ghostd uptime                  : "
     ["status_drespon"]="  ghostd responding        (RPC) : "
     ["status_dlisten"]="  ghostd listening          (IP) : "
-    ["status_dportop"]="  ghostd port open   (P2P 51738) : "
+    ["status_dportop"]="  ghostd port open   (P2P 51728) : "
     ["status_dconnec"]="  ghostd connecting      (peers) : "
     ["status_dconcnt"]="  ghostd connection count        : "
     ["status_dblsync"]="  ghostd blocks synced           : "

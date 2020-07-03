@@ -1327,12 +1327,12 @@ configure_firewall(){
         if [ -z "$SSH_PORT" ] ; then SSH_PORT=22 ; fi
 
         # creates a minimal set of firewall rules that allows INBOUND masternode p2p & SSH ports */
-        # disallow everything except ssh, 8080 (webserver) and inbound ports 51738 and 51938
+        # disallow everything except ssh, 8080 (webserver) and inbound ports 51728 and 51938
         $FIREWALL_CLI default deny
         $FIREWALL_CLI logging on
         $FIREWALL_CLI allow $SSH_PORT/tcp
         $FIREWALL_CLI allow 8080/tcp comment 'ghostman webserver'
-        $FIREWALL_CLI allow 51738/tcp comment 'ghost p2p mainnet'
+        $FIREWALL_CLI allow 51728/tcp comment 'ghost p2p mainnet'
         $FIREWALL_CLI allow 51938/tcp comment 'ghost p2p testnet'
 
         # This will only allow 6 connections every 30 seconds from the same IP address.
@@ -1388,8 +1388,8 @@ get_ghostd_status(){
     GHOSTD_UPTIME=$($GHOST_CLI uptime 2>/dev/null)
     if [ -z "$GHOSTD_UPTIME" ] ; then GHOSTD_UPTIME=0 ; fi
 
-    GHOSTD_LISTENING=$(netstat -nat | grep LIST | grep -c 51738);
-    GHOSTD_CONNECTIONS=$(netstat -nat | grep ESTA | grep -c 51738);
+    GHOSTD_LISTENING=$(netstat -nat | grep LIST | grep -c 51728);
+    GHOSTD_CONNECTIONS=$(netstat -nat | grep ESTA | grep -c 51728);
     GHOSTD_CURRENT_BLOCK=$("$GHOST_CLI" getblockcount 2>/dev/null)
     if [ -z "$GHOSTD_CURRENT_BLOCK" ] ; then GHOSTD_CURRENT_BLOCK=0 ; fi
 
@@ -1421,7 +1421,7 @@ get_ghostd_status(){
 
     get_public_ips
 
-    PUBLIC_PORT_CLOSED=$( timeout 2 nc -4 -z "$PUBLIC_IPV4" 51738 > /dev/null 2>&1; echo $? )
+    PUBLIC_PORT_CLOSED=$( timeout 2 nc -4 -z "$PUBLIC_IPV4" 51728 > /dev/null 2>&1; echo $? )
 
     #staking info
     if [ $GHOSTD_RUNNING == 1 ]; then
@@ -1547,7 +1547,7 @@ print_status() {
     if [ "$PUBLIC_PORT_CLOSED"  -gt 0 ]; then
        echo
        highlight "* Inbound P2P Port is not open - this is okay and will not affect the function of this staking node."
-       highlight "  However by opening port 51738/tcp you can provide full resources to the Ghost Network by acting as a 'full node'."
+       highlight "  However by opening port 51728/tcp you can provide full resources to the Ghost Network by acting as a 'full node'."
        highlight "  A 'full staking node' will increase the number of other nodes you connect to beyond the 16 limit."
     fi
 }
