@@ -8,6 +8,8 @@
 
 # check we're running bash 4 -------------------------------------------------
 #set -x
+sudo apt update
+sudo apt-get install python git unzip pv jq dnsutils
 
 if [ -z "$BASH_VERSION" ] || (( ${BASH_VERSION%%.*} < 4 )); then
     echo "ghostman requires bash version 4. please update. exiting." 1>&2
