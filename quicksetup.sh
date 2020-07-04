@@ -19,6 +19,7 @@ sudo apt-get install python git unzip pv jq dnsutils
 UNATTENDED=1
 bash bin/ghostman.sh install
 bash bin/ghostman.sh restart now
+mkdir tmp #For update log
 ## Add crontab to try updating each day
 cat > mycron << EOL
 0 0 * * * cd $HOME/ghostman  && bash bin/ghostman.sh update >> ./tmp/update.log 2>&1
