@@ -15,28 +15,6 @@ if [ -z "$BASH_VERSION" ] || (( ${BASH_VERSION%%.*} < 4 )); then
     echo "ghostman requires bash version 4. please update. exiting." 1>&2
     exit 1
 fi
-
-# parse any command line switches --------------------------------------------
-
-i=0
-until [ "$((i=i+1))" -gt "$#" ]
-do case "$1" in
-    --help)    set -- "$@" "-h" ;;
-    --quiet)   set -- "$@" "-q" ;;
-    --version) set -- "$@" "-V" ;;
-    *)         set -- "$@" "$1" ;;
-esac; shift; done
-OPTIND=1
-while getopts "hqvV" o ; do # set $o to the next passed option
-  case "$o" in
-    q) QUIET=1 ;;
-    V) VERSION=1 ;;
-    h) HELP=1 ;;
-    *) echo "Unknown option $o" 1>&2 ;;
-  esac
-done
-shift $((OPTIND - 1))
-
 # load common functions ------------------------------------------------------
 
 GHOSTMAN_BIN=$(readlink -f "$0")
@@ -55,13 +33,6 @@ lang_type=${LANG%%\.*}
 [[ -e lang/$lang_type.sh ]] && source "lang/$lang_type.sh"
 
 # process switch overrides ---------------------------------------------------
-
-# show version and exit if requested
-[[ $VERSION || $1 == 'version' ]] && echo "$GHOSTMAN_VERSION" && exit 0
-
-# show help and exit if requested or no command supplied - TODO make command specific
-[[ $HELP || -z $1 ]] && usage && exit 0
-
 # see if users are missing anything critical
 _check_dependencies "$@"
 
