@@ -40,20 +40,19 @@ shift $((OPTIND - 1))
 # load common functions ------------------------------------------------------
 
 GHOSTMAN_BIN=$(readlink -f "$0")
-GHOSTMAN_GITDIR=$(readlink -f "${GHOSTMAN_BIN%%/bin/${GHOSTMAN_BIN##*/}}")
 # shellcheck source=lib/functions.sh
-source "$GHOSTMAN_GITDIR/lib/functions.sh"
+source "lib/functions.sh"
 
 # load language packs --------------------------------------------------------
 
 declare -A messages
 
 # set all default strings
-source "$GHOSTMAN_GITDIR/lang/en_US.sh"
+source "lang/en_US.sh"
 
 # override if configured
 lang_type=${LANG%%\.*}
-[[ -e $GHOSTMAN_GITDIR/lang/$lang_type.sh ]] && source "$GHOSTMAN_GITDIR/lang/$lang_type.sh"
+[[ -e lang/$lang_type.sh ]] && source "lang/$lang_type.sh"
 
 # process switch overrides ---------------------------------------------------
 
