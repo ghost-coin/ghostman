@@ -325,8 +325,8 @@ _get_versions() {
         die "\n${messages["err_could_not_get_version"]} $DOWNLOAD_PAGE -- ${messages["exiting"]}"
     fi
 
-    DOWNLOAD_URL="https://github.com/ghost-coin/ghost-core/releases/download/v${LATEST_VERSION}/ghost-${LATEST_VERSION}-${ARCH}.tar.gz"
-    DOWNLOAD_FILE="ghost-${LATEST_VERSION}-${ARCH}.tar.gz"
+    DOWNLOAD_URL="https://github.com/ghost-coin/ghost-core/releases/download/v${LATEST_VERSION}/ghost-${LATEST_VERSION}-${ARCH}.tgz"
+    DOWNLOAD_FILE="ghost-${LATEST_VERSION}-${ARCH}.tgz"
 
 }
 
