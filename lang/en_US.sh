@@ -73,6 +73,7 @@ messages=(
     ["usage_title"]="installs, updates, and manages single-user ghost daemons and wallets"
     ["usage_install_description"]="installs, updates, and manages single-user ghost daemons and wallets"
     ["usage_update_description"]="updates ghost to latest version and restarts"
+    ["usage_selfupdate_description"]="updates ghostman to latest version"
     ["usage_restart_description"]="restarts ghostd and deletes:"
     ["usage_restart_description_now"]="will prompt user if not given the 'now' argument"
     ["usage_status_description"]="polls local and web sources and displays current status"

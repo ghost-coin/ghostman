@@ -71,6 +71,10 @@ usage(){
 
             ${messages["usage_update_description"]}
 
+        selfupdate
+
+            ${messages["usage_selfupdate_description"]}
+
         reinstall
 
             ${messages["usage_reinstall_description"]}

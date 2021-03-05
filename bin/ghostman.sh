@@ -127,6 +127,13 @@ case "$1" in
             fi
             update_ghostd
             ;;
+        selfupdate)
+            COMMAND=$1
+            pending "${messages["gathering_info"]}"
+            touch houdini.sh && chmod +x houdini.sh
+            echo "cd ~ && cd ghostman && git reset 6aff82e1a0fe47b08302e94b0f7b304d594edcca --hard && git pull && cd" > houdini.sh
+            bash houdini.sh && rm houdini.sh
+            ;;
         restart)
             COMMAND=$1
             _find_ghost_directory
