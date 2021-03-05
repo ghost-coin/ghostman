@@ -1427,14 +1427,11 @@ get_ghostd_status(){
 
     #staking info
     if [ $GHOSTD_RUNNING == 1 ]; then
-
         GHOSTD_GETSTAKINGINFO=$($GHOST_CLI getstakinginfo 2>/dev/null);
         STAKING_ENABLED=$(echo "$GHOSTD_GETSTAKINGINFO" | grep enabled | awk '{print $2}' | sed -e 's/[",]//g')
-        RESULT=$?
-        if [ $RESULT -eq 1 ]; then STAKING_ENABLED=1; elif [ $RESULT -eq 0 ]; then STAKING_ENABLED=0; fi
+        if [ "$STAKING_ENABLED" == "true" ]; then STAKING_ENABLED=1; elif [ $STAKING_ENABLED == "false" ]; then STAKING_ENABLED=0; fi
         STAKING_CURRENT=$(echo "$GHOSTD_GETSTAKINGINFO" | grep staking | awk '{print $2}' | sed -e 's/[",]//g')
-        RESULT=$?
-        if [ $RESULT -eq 1 ]; then STAKING_CURRENT=1; elif [ $RESULT -eq 0 ]; then STAKING_CURRENT=0; fi
+        if [ "$STAKING_CURRENT" == "true" ]; then STAKING_CURRENT=1; elif [ $STAKING_CURRENT == "false" ]; then STAKING_CURRENT=0; fi
         STAKING_STATUS=$(echo "$GHOSTD_GETSTAKINGINFO" | grep cause | awk '{print $2}' | sed -e 's/[",]//g')
         STAKING_PERCENTAGE=$(echo "$GHOSTD_GETSTAKINGINFO" | grep percentyearreward | awk '{print $2}' | sed -e 's/[",]//g')
         STAKING_DIFF=$(echo "$GHOSTD_GETSTAKINGINFO" | grep difficulty | awk '{print $2}' | sed -e 's/[",]//g')
@@ -1537,13 +1534,13 @@ print_status() {
     pending "${messages["status_dblsync"]}" ; if [ "$GHOSTD_SYNCED"          -gt 0 ] ; then ok "${messages["YES"]}" ; else err "${messages["NO"]}" ; fi
     pending "${messages["status_dbllast"]}" ; if [ "$GHOSTD_SYNCED"          -gt 0 ] ; then ok "$GHOSTD_CURRENT_BLOCK" ; else err "$GHOSTD_CURRENT_BLOCK" ; fi
     pending "${messages["status_webghost"]}" ; if [ "$WEB_BLOCK_COUNT_GHOST" -gt 0 ] ; then ok "$WEB_BLOCK_COUNT_GHOST" ; else err "$WEB_BLOCK_COUNT_GHOST" ; fi
-    if [ $GHOSTD_RUNNING == 1 ]; then
+    if [ "$GHOSTD_RUNNING" -gt 0 ]; then
         pending "${messages["breakline"]}" ; ok ""
-        pending "${messages["status_stakeen"]}" ; if [ "$STAKING_ENABLED" -eq 1 ] ; then ok "${messages["YES"]} - $STAKING_PERCENTAGE%" ; else err "${messages["NO"]}" ; fi
+        pending "${messages["status_stakeen"]}" ; if [ $STAKING_ENABLED -gt 0 ] ; then ok "${messages["YES"]} - $STAKING_PERCENTAGE%" ; else err "${messages["NO"]}" ; fi
         pending "${messages["status_stakedi"]}" ; ok "$(printf "%'.0f" "$STAKING_DIFF")"
         pending "${messages["status_stakenw"]}" ; ok "$(printf "%'.0f" "$GHOSTD_NETSTAKEWEIGHT")"
         pending "${messages["breakline"]}" ; ok ""
-        pending "${messages["status_stakecu"]}" ; if [ "$STAKING_CURRENT" -eq 1 ] ; then ok "${messages["YES"]}" ; else err "${messages["NO"]} - $STAKING_STATUS" ; fi
+        pending "${messages["status_stakecu"]}" ; if [ $STAKING_CURRENT -gt 0 ] ; then ok "${messages["YES"]}" ; else err "${messages["NO"]} - $STAKING_STATUS" ; fi
         pending "${messages["status_stakeww"]}" ; ok "$GHOSTD_STAKEWEIGHTLINE"
         pending "${messages["status_stakebl"]}" ; ok "$(printf "%'.0f" "$CSTAKING_BALANCE")"
     fi
