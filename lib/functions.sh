@@ -19,7 +19,7 @@ GHOSTD_RUNNING=0
 GHOSTD_RESPONDING=0
 GHOSTMAN_VERSION=$(cat "$GHOSTMAN_GITDIR/VERSION")
 DATA_DIR="$HOME/.ghost"
-DOWNLOAD_PAGE="https://github.com/ghost-coin/ghost-core/releases"
+DOWNLOAD_PAGE="https://github.com/ghost-coin/ghost-legacy/releases"
 #GHOSTMAN_CHECKOUT=$(GIT_DIR=$GHOSTMAN_GITDIR/.git GIT_WORK_TREE=$GHOSTMAN_GITDIR git describe --dirty | sed -e "s/^.*-\([0-9]\+-g\)/\1/" )
 #if [ "$GHOSTMAN_CHECKOUT" == "v"$GHOSTMAN_VERSION ]; then
 #    GHOSTMAN_CHECKOUT=""
@@ -312,7 +312,7 @@ _get_versions() {
 
     unset LATEST_VERSION
     LVCOUNTER=0
-    RELEASES=$( $curl_cmd https://api.github.com/repos/ghost-coin/ghost-core/releases )
+    RELEASES=$( $curl_cmd https://api.github.com/repos/ghost-coin/ghost-legacy/releases )
     while [ -z "$LATEST_VERSION" ] && [ $LVCOUNTER -lt 5 ]; do
         RELEASE=$( echo "$RELEASES" | jq -r .[$LVCOUNTER] 2>/dev/null )
         PR=$( echo "$RELEASE" | jq .prerelease)
@@ -327,7 +327,7 @@ _get_versions() {
         die "\n${messages["err_could_not_get_version"]} $DOWNLOAD_PAGE -- ${messages["exiting"]}"
     fi
 
-    DOWNLOAD_URL="https://github.com/ghost-coin/ghost-core/releases/download/v${LATEST_VERSION}/ghost-${LATEST_VERSION}-${ARCH}.tgz"
+    DOWNLOAD_URL="https://github.com/ghost-coin/ghost-legacy/releases/download/v${LATEST_VERSION}/ghost-${LATEST_VERSION}-${ARCH}.tgz"
     DOWNLOAD_FILE="ghost-${LATEST_VERSION}-${ARCH}.tgz"
 
 }
@@ -472,7 +472,7 @@ install_ghostd(){
     SHA256SUM=$( sha256sum "$DOWNLOAD_FILE" )
     SHA256PASS=$( grep -c "$SHA256SUM" "${DOWNLOAD_FILE}.DIGESTS.txt" )
     if [ "$SHA256PASS" -lt 1 ] ; then
-        $wget_cmd -O - https://api.github.com/repos/ghost-coin/ghost-core/releases | jq -r .[$LVCOUNTER] | jq .body > "${DOWNLOAD_FILE}.DIGESTS2.txt"
+        $wget_cmd -O - https://api.github.com/repos/ghost-coin/ghost-legacy/releases | jq -r .[$LVCOUNTER] | jq .body > "${DOWNLOAD_FILE}.DIGESTS2.txt"
         SHA256DLPASS=$( grep -c "$SHA256SUM" "${DOWNLOAD_FILE}.DIGESTS2.txt" )
         if [ "$SHA256DLPASS" -lt 1 ] ; then
             echo -e " ${C_RED} SHA256 ${messages["checksum"]} ${messages["FAILED"]} ${messages["try_again_later"]} ${messages["exiting"]}$C_NORM"
@@ -534,7 +534,7 @@ install_ghostd(){
     if [ "$INIT" == "systemd" ] && [ "$USER" == "ghost" ] && [ -n "$SUDO_USER" ]; then
         pending " --> detecting $INIT for auto boot ($USER) ... "
         ok "${messages["done"]}"
-        DOWNLOAD_SERVICE="https://raw.githubusercontent.com/ghost-coin/ghost-core/master/contrib/init/ghostd.service"
+        DOWNLOAD_SERVICE="https://raw.githubusercontent.com/ghost-coin/ghost-legacy/master/contrib/init/ghostd.service"
         pending " --> [systemd] ${messages["downloading"]} ${DOWNLOAD_SERVICE}... "
         $wget_cmd -O - $DOWNLOAD_SERVICE | pv -trep -w80 -N service > ghostd.service
         if [ ! -e ghostd.service ] ; then
@@ -650,7 +650,7 @@ update_ghostd(){
         SHA256SUM=$( sha256sum "$DOWNLOAD_FILE" )
         SHA256PASS=$( grep -c "$SHA256SUM" "${DOWNLOAD_FILE}.DIGESTS.txt" )
         if [ "$SHA256PASS" -lt 1 ] ; then
-            $wget_cmd -O - https://api.github.com/repos/ghost-coin/ghost-core/releases | jq -r .[$LVCOUNTER] | jq .body > "${DOWNLOAD_FILE}.DIGESTS2.txt"
+            $wget_cmd -O - https://api.github.com/repos/ghost-coin/ghost-legacy/releases | jq -r .[$LVCOUNTER] | jq .body > "${DOWNLOAD_FILE}.DIGESTS2.txt"
             SHA256DLPASS=$( grep -c "$SHA256SUM" "${DOWNLOAD_FILE}.DIGESTS2.txt")
             if [ "$SHA256DLPASS" -lt 1 ] ; then
                 echo -e " ${C_RED} SHA256 ${messages["checksum"]} ${messages["FAILED"]} ${messages["try_again_later"]} ${messages["exiting"]}$C_NORM"
