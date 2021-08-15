@@ -466,21 +466,6 @@ install_ghostd(){
         ok "${messages["done"]}"
     fi
 
-    # prove it ---------------------------------------------------------------
-
-    pending " --> ${messages["checksumming"]} ${DOWNLOAD_FILE}... "
-    SHA256SUM=$( sha256sum "$DOWNLOAD_FILE" )
-    SHA256PASS=$( grep -c "$SHA256SUM" "${DOWNLOAD_FILE}.DIGESTS.txt" )
-    if [ "$SHA256PASS" -lt 1 ] ; then
-        $wget_cmd -O - https://api.github.com/repos/ghost-coin/ghost-core/releases | jq -r .[$LVCOUNTER] | jq .body > "${DOWNLOAD_FILE}.DIGESTS2.txt"
-        SHA256DLPASS=$( grep -c "$SHA256SUM" "${DOWNLOAD_FILE}.DIGESTS2.txt" )
-        if [ "$SHA256DLPASS" -lt 1 ] ; then
-            echo -e " ${C_RED} SHA256 ${messages["checksum"]} ${messages["FAILED"]} ${messages["try_again_later"]} ${messages["exiting"]}$C_NORM"
-            exit 1
-        fi
-    fi
-    ok "${messages["done"]}"
-
     # produce it -------------------------------------------------------------
 
     pending " --> ${messages["unpacking"]} ${DOWNLOAD_FILE}... " && \
@@ -643,21 +628,6 @@ update_ghostd(){
         else
             ok "${messages["done"]}"
         fi
-
-        # prove it ---------------------------------------------------------------
-
-        pending " --> ${messages["checksumming"]} ${DOWNLOAD_FILE}... "
-        SHA256SUM=$( sha256sum "$DOWNLOAD_FILE" )
-        SHA256PASS=$( grep -c "$SHA256SUM" "${DOWNLOAD_FILE}.DIGESTS.txt" )
-        if [ "$SHA256PASS" -lt 1 ] ; then
-            $wget_cmd -O - https://api.github.com/repos/ghost-coin/ghost-core/releases | jq -r .[$LVCOUNTER] | jq .body > "${DOWNLOAD_FILE}.DIGESTS2.txt"
-            SHA256DLPASS=$( grep -c "$SHA256SUM" "${DOWNLOAD_FILE}.DIGESTS2.txt")
-            if [ "$SHA256DLPASS" -lt 1 ] ; then
-                echo -e " ${C_RED} SHA256 ${messages["checksum"]} ${messages["FAILED"]} ${messages["try_again_later"]} ${messages["exiting"]}$C_NORM"
-                exit 1
-            fi
-        fi
-        ok "${messages["done"]}"
 
         # produce it -------------------------------------------------------------
 
