@@ -486,11 +486,13 @@ install_ghostd(){
 
     mv "ghost-$LATEST_VERSION/bin/ghostd" "ghostd-$LATEST_VERSION"
     mv "ghost-$LATEST_VERSION/bin/ghost-cli" "ghost-cli-$LATEST_VERSION"
+    mv "ghost-$LATEST_VERSION/bin/ghost-wallet" "ghost-wallet-$LATEST_VERSION"
     if [ $ARM != 1 ];then
         mv "ghost-$LATEST_VERSION/bin/ghost-qt" "ghost-qt-$LATEST_VERSION"
     fi
     ln -s "ghostd-$LATEST_VERSION" ghostd
     ln -s "ghost-cli-$LATEST_VERSION" ghost-cli
+    ln -s "ghost-wallet-$LATEST_VERSION" ghost-wallet
     if [ $ARM != 1 ];then
         ln -s "ghost-qt-$LATEST_VERSION" ghost-qt
     fi
@@ -498,7 +500,7 @@ install_ghostd(){
     # permission it ----------------------------------------------------------
 
     if [ -n "$SUDO_USER" ]; then
-        chown -h "$USER":"$USER" {"$DOWNLOAD_FILE","${DOWNLOAD_FILE}.DIGESTS.txt",ghost-cli,ghostd,ghost-qt,ghost*"$LATEST_VERSION"}
+        chown -h "$USER":"$USER" {"$DOWNLOAD_FILE","${DOWNLOAD_FILE}.DIGESTS.txt",ghost-cli,ghostd,ghost-qt,ghost-wallet,ghost*"$LATEST_VERSION"}
     fi
 
     # purge it ---------------------------------------------------------------
@@ -542,6 +544,9 @@ install_ghostd(){
         fi
     fi
 
+    # sniff it ---------------------------------------------------------------
+    install_ghost_runonce
+
     # poll it ----------------------------------------------------------------
 
     _get_versions
@@ -555,13 +560,13 @@ install_ghostd(){
         echo -e ""
         echo -e "${C_GREEN}${messages["installed_in"]} ${INSTALL_DIR}$C_NORM"
         echo -e ""
-        ls -l --color {"$DOWNLOAD_FILE","${DOWNLOAD_FILE}.DIGESTS.txt",ghost-cli,ghostd,ghost-qt,ghost*"$LATEST_VERSION"}
+        ls -l --color {"$DOWNLOAD_FILE","${DOWNLOAD_FILE}.DIGESTS.txt",ghost-cli,ghostd,ghost-qt,ghost-wallet,ghost*"$LATEST_VERSION"}
         echo -e ""
 
         if [ -n "$SUDO_USER" ]; then
             echo -e "${C_GREEN}Symlinked to: ${LINK_TO_SYSTEM_DIR}$C_NORM"
             echo -e ""
-            ls -l --color "$LINK_TO_SYSTEM_DIR"/{ghostd,ghost-cli}
+            ls -l --color "$LINK_TO_SYSTEM_DIR"/{ghostd,ghost-cli,ghost-wallet}
             echo -e ""
         fi
 
@@ -569,6 +574,12 @@ install_ghostd(){
         echo -e "${C_RED}${messages["ghost_version"]} $CURRENT_VERSION ${messages["is_not_uptodate"]} ($LATEST_VERSION) ${messages["exiting"]}$C_NORM"
         exit 1
     fi
+}
+
+install_ghost_runonce() {
+    INSTALL_DIR=$HOME/ghostcore
+    GHOST_WALLET="$INSTALL_DIR/ghost-wallet"
+    $GHOST_WALLET -wallet="" create
 }
 
 update_ghostd(){
@@ -664,11 +675,13 @@ update_ghostd(){
 
         mv "ghost-$LATEST_VERSION/bin/ghostd" "ghostd-$LATEST_VERSION"
         mv "ghost-$LATEST_VERSION/bin/ghost-cli" "ghost-cli-$LATEST_VERSION"
+        mv "ghost-$LATEST_VERSION/bin/ghost-wallet" "ghost-wallet-$LATEST_VERSION"
         if [ $ARM != 1 ];then
             mv "ghost-$LATEST_VERSION/bin/ghost-qt" "ghost-qt-$LATEST_VERSION"
         fi
         ln -s "ghostd-$LATEST_VERSION" ghostd
         ln -s "ghost-cli-$LATEST_VERSION" ghost-cli
+        ln -s "ghost-wallet-$LATEST_VERSION" ghost-wallet
         if [ $ARM != 1 ];then
             ln -s "ghost-qt-$LATEST_VERSION" ghost-qt
         fi
@@ -676,7 +689,7 @@ update_ghostd(){
         # permission it ----------------------------------------------------------
 
         if [ -n "$SUDO_USER" ]; then
-            chown -h "$USER":"$USER" {"$DOWNLOAD_FILE","${DOWNLOAD_FILE}.DIGESTS.txt",ghost-cli,ghostd,ghost-qt,ghost*"$LATEST_VERSION"}
+            chown -h "$USER":"$USER" {"$DOWNLOAD_FILE","${DOWNLOAD_FILE}.DIGESTS.txt",ghost-cli,ghostd,ghost-qt,ghost-wallet,ghost*"$LATEST_VERSION"}
         fi
 
         # purge it ---------------------------------------------------------------
