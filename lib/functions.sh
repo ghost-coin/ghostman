@@ -341,12 +341,13 @@ _check_ghostd_state() {
     fi
     if [ "$( $GHOST_CLI help 2>/dev/null | wc -l )" -gt 0 ]; then
         GHOSTD_RESPONDING=1
-        GHOSTD_WALLETSTATUS=$( "$GHOST_CLI" getwalletinfo | jq -r .encryptionstatus )
-        GHOSTD_WALLET=$( "$GHOST_CLI" getwalletinfo | jq -r .hdmasterkeyid )
+        GHOSTD_FIRSTWALLET=$( ls -1 $DATA_DIR/wallets | grep -v \.dat | grep -v \.log | head -n 1 )
+        GHOSTD_WALLETSTATUS=$( "$GHOST_CLI" -rpcwallet=$GHOSTD_FIRSTWALLET getwalletinfo )
+        GHOSTD_WALLET=$( echo $GHOSTD_WALLETSTATUS | jq -r .hdmasterkeyid )
         if [ "$GHOSTD_WALLET"  == "null" ]; then
-            GHOSTD_WALLET=$( "$GHOST_CLI" getwalletinfo | jq -r .hdseedid )
+            GHOSTD_WALLET=$( "$GHOST_CLI" -rpcwallet=$GHOSTD_FIRSTWALLET getwalletinfo | jq -r .hdseedid )
         fi
-        GHOSTD_TBALANCE=$( "$GHOST_CLI" getwalletinfo | jq -r .total_balance )
+        GHOSTD_TBALANCE=$( "$GHOST_CLI" -rpcwallet=$GHOSTD_FIRSTWALLET getwalletinfo | jq -r .total_balance )
     fi
 }
 
