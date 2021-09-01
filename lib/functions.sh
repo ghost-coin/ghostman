@@ -308,7 +308,7 @@ _get_versions() {
     _get_platform_info
 
     if [ -z "$GHOST_CLI" ]; then GHOST_CLI='echo'; fi
-    CURRENT_VERSION=$( $GHOST_CLI --version | grep -m1 Ghost | sed 's/\Ghost Core RPC client version v//g' | sed 's/\.[^.]*$//' 2>/dev/null ) 2>/dev/null
+    CURRENT_VERSION=$( $GHOST_CLI --version | grep -m1 Ghost | sed 's/\Ghost Core RPC client version v//g' | sed 's/\./\#/4' | sed 's/\#[^#]*$//' 2>/dev/null ) 2>/dev/null
 
     unset LATEST_VERSION
     LVCOUNTER=0
