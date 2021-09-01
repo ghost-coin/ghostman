@@ -666,7 +666,9 @@ update_ghostd(){
             ghost-qt \
             "ghost-qt-$CURRENT_VERSION" \
             ghost-cli \
-            "ghost-cli-$CURRENT_VERSION"
+            "ghost-cli-$CURRENT_VERSION" \
+            ghost-wallet \
+            "ghost-wallet-$CURRENT_VERSION"
         #rm -rf \
         #    "$DATA_DIR"/banlist.dat \
         #    "$DATA_DIR"/peers.dat
