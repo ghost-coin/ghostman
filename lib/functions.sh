@@ -19,7 +19,7 @@ GHOSTD_RUNNING=0
 GHOSTD_RESPONDING=0
 GHOSTMAN_VERSION=$(cat "$GHOSTMAN_GITDIR/VERSION")
 DATA_DIR="$HOME/.ghost"
-DOWNLOAD_PAGE="https://github.com/ghost-coin/ghost-intermediate/releases"
+DOWNLOAD_PAGE="https://github.com/ghost-coin/ghost-core/releases"
 #GHOSTMAN_CHECKOUT=$(GIT_DIR=$GHOSTMAN_GITDIR/.git GIT_WORK_TREE=$GHOSTMAN_GITDIR git describe --dirty | sed -e "s/^.*-\([0-9]\+-g\)/\1/" )
 #if [ "$GHOSTMAN_CHECKOUT" == "v"$GHOSTMAN_VERSION ]; then
 #    GHOSTMAN_CHECKOUT=""
@@ -312,7 +312,7 @@ _get_versions() {
 
     unset LATEST_VERSION
     LVCOUNTER=0
-    RELEASES=$( $curl_cmd https://api.github.com/repos/ghost-coin/ghost-intermediate/releases )
+    RELEASES=$( $curl_cmd https://api.github.com/repos/ghost-coin/ghost-core/releases )
     while [ -z "$LATEST_VERSION" ] && [ $LVCOUNTER -lt 5 ]; do
         RELEASE=$( echo "$RELEASES" | jq -r .[$LVCOUNTER] 2>/dev/null )
         PR=$( echo "$RELEASE" | jq .prerelease)
@@ -327,8 +327,8 @@ _get_versions() {
         die "\n${messages["err_could_not_get_version"]} $DOWNLOAD_PAGE -- ${messages["exiting"]}"
     fi
 
-    DOWNLOAD_URL="https://github.com/ghost-coin/ghost-intermediate/releases/download/v${LATEST_VERSION}/ghost-${LATEST_VERSION}-${ARCH}.tgz"
-    DOWNLOAD_FILE="ghost-${LATEST_VERSION}-${ARCH}.tgz"
+    DOWNLOAD_URL="https://github.com/ghost-coin/ghost-core/releases/download/v${LATEST_VERSION}/ghost-${LATEST_VERSION}-${ARCH}.tar.gz"
+    DOWNLOAD_FILE="ghost-${LATEST_VERSION}-${ARCH}.tar.gz"
 
 }
 
@@ -522,7 +522,7 @@ install_ghostd(){
     if [ "$INIT" == "systemd" ] && [ "$USER" == "ghost" ] && [ -n "$SUDO_USER" ]; then
         pending " --> detecting $INIT for auto boot ($USER) ... "
         ok "${messages["done"]}"
-        DOWNLOAD_SERVICE="https://raw.githubusercontent.com/ghost-coin/ghost-intermediate/master/contrib/init/ghostd.service"
+        DOWNLOAD_SERVICE="https://raw.githubusercontent.com/ghost-coin/ghost-core/master/contrib/init/ghostd.service"
         pending " --> [systemd] ${messages["downloading"]} ${DOWNLOAD_SERVICE}... "
         $wget_cmd -O - $DOWNLOAD_SERVICE | pv -trep -w80 -N service > ghostd.service
         if [ ! -e ghostd.service ] ; then
@@ -644,7 +644,7 @@ update_ghostd(){
         # produce it -------------------------------------------------------------
 
         pending " --> ${messages["unpacking"]} ${DOWNLOAD_FILE}... " && \
-        tar zxf "$DOWNLOAD_FILE" && \
+        tar xvf "$DOWNLOAD_FILE" && \
         ok "${messages["done"]}"
 
         # pummel it --------------------------------------------------------------
@@ -676,11 +676,12 @@ update_ghostd(){
 
         # place it ---------------------------------------------------------------
 
-        mv "ghost-$LATEST_VERSION/bin/ghostd" "ghostd-$LATEST_VERSION"
-        mv "ghost-$LATEST_VERSION/bin/ghost-cli" "ghost-cli-$LATEST_VERSION"
-        mv "ghost-$LATEST_VERSION/bin/ghost-wallet" "ghost-wallet-$LATEST_VERSION"
+        mv "bin/ghostd" "ghostd-$LATEST_VERSION"
+        mv "bin/ghost-cli" "ghost-cli-$LATEST_VERSION"
+        mv "bin/ghost-wallet" "ghost-wallet-$LATEST_VERSION"
+        
         if [ $ARM != 1 ];then
-            mv "ghost-$LATEST_VERSION/bin/ghost-qt" "ghost-qt-$LATEST_VERSION"
+            mv "bin/ghost-qt" "ghost-qt-$LATEST_VERSION"
         fi
         ln -s "ghostd-$LATEST_VERSION" ghostd
         ln -s "ghost-cli-$LATEST_VERSION" ghost-cli
