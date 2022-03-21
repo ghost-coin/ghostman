@@ -676,12 +676,11 @@ update_ghostd(){
 
         # place it ---------------------------------------------------------------
 
-        mv "bin/ghostd" "ghostd-$LATEST_VERSION"
-        mv "bin/ghost-cli" "ghost-cli-$LATEST_VERSION"
-        mv "bin/ghost-wallet" "ghost-wallet-$LATEST_VERSION"
-        
+        mv "ghost-$LATEST_VERSION/ghostd" "ghostd-$LATEST_VERSION"
+        mv "ghost-$LATEST_VERSION/ghost-cli" "ghost-cli-$LATEST_VERSION"
+        mv "ghost-$LATEST_VERSION/ghost-wallet" "ghost-wallet-$LATEST_VERSION"
         if [ $ARM != 1 ];then
-            mv "bin/ghost-qt" "ghost-qt-$LATEST_VERSION"
+            mv "ghost-$LATEST_VERSION/ghost-qt" "ghost-qt-$LATEST_VERSION"
         fi
         ln -s "ghostd-$LATEST_VERSION" ghostd
         ln -s "ghost-cli-$LATEST_VERSION" ghost-cli
